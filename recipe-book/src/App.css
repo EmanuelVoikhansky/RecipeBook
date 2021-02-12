@@ -1,3 +1,15 @@
 .App {
-  text-align: center;
+  margin-top: 24px;
+  align-items: center;
+  width: 100%;
+}
+
+.Vertical {
+  display: flex;
+  flex-flow: column;
+}
+
+.Horizontal {
+  display: flex;
+  flex-flow: row;
 }
