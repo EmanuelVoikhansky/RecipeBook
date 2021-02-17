@@ -9,14 +9,9 @@ import {
 import Icon from "./common/Icon.js";
 import SearchBar from "./common/SearchBar.js";
 import AccountWidget from "./common/AccountWidget.js";
+import Recipe from "./common/Recipe.js";
 
-export type Recipe = {
-  id: number,
-  name: string,
-  stars: "1" | "2" | "3" | "4" | "5",
-  imageUrl?: string,
-  instructions: string,
-};
+const RECIPES_PER_ROW = 3;
 
 function App(): React.Node {
   return (
@@ -25,6 +20,11 @@ function App(): React.Node {
         <AccountWidget account={HARDCODED_DEV_ACCOUNT} />
         <div className="VerticalSpacer" />
         <SearchBar value={""} onChange={() => {}} />
+      </div>
+      <div className="RecipeGrid Centered">
+        {HARDCODED_DEV_DATA.map((recipe) => (
+          <Recipe recipe={recipe} key={"recipe" + recipe.id} />
+        ))}
       </div>
     </div>
   );

@@ -15,7 +15,8 @@
 
 .SidePanel {
   height: calc(100vh - 48px);
-  width: 25vw;
+  width: 15vw;
+  min-width: 400px;
   padding: 24px;
   border-right: 1px solid black;
 }
@@ -29,5 +30,18 @@
 .VerticalSpacer {
   height: 0px;
   margin-top: 8px;
+  width: 100%;
+}
+
+.Centered {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.RecipeGrid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 16px;
+  margin: 24px;
   width: 100%;
 }

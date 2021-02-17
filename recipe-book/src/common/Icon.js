@@ -7,13 +7,14 @@ import * as icons from "@fortawesome/free-solid-svg-icons";
 type Props = {
   icon: string,
   margin?: string,
+  size?: string,
 };
 
-function Icon({ icon, margin }: Props): React.Node {
+function Icon({ icon, margin, size }: Props): React.Node {
   return (
     <span style={{ margin: margin ?? "0px" }}>
       {icons[icon] != null ? (
-        <FontAwesomeIcon icon={icons[icon]} />
+        <FontAwesomeIcon icon={icons[icon]} size={size} />
       ) : (
         <div>Can't find icon: {icon}</div>
       )}
