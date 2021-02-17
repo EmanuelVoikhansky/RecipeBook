@@ -3,16 +3,19 @@
  * evern *wait* ms. The final set of inputs before the timeout is triggered will
  * be the ones used
  **/
-export default function debounce(func, wait) {
+
+const debounce = (func, wait) => {
   let timeout;
-  return function () {
-    const context = this;
-    const args = arguments;
-    const later = function () {
-      timeout = null;
-      func.apply(context, args);
+
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
     };
+
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
-}
+};
+
+export default debounce;

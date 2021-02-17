@@ -1,9 +1,9 @@
 // @flow
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Icon from "./Icon.js";
-import debounce from "./debounce.js";
+import useDebouncedOnChange from "./useDebouncedOnChange.js";
 
 type Props = {
   value: string,
@@ -11,12 +11,11 @@ type Props = {
 };
 
 function SearchBar(props: Props): React.Node {
-  const [value, setValue] = useState(props.value);
-  const debouncedOnChange = debounce(props.onChange, 500);
-  const updateValue = (newValue) => {
-    setValue(newValue);
-    debouncedOnChange(newValue);
-  };
+  const [value, setValue] = useDebouncedOnChange(
+    props.value,
+    props.onChange,
+    500
+  );
   return (
     <div
       style={{ border: "1px solid black", borderRadius: "4px", padding: "4px" }}
@@ -28,7 +27,7 @@ function SearchBar(props: Props): React.Node {
           style={{ border: "none", focus: { outline: "none" } }}
           type="text"
           value={value}
-          onChange={(event) => updateValue(event.target.value)}
+          onChange={(event) => setValue(event.target.value)}
         />
       </label>
     </div>

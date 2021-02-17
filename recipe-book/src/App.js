@@ -18,7 +18,12 @@ function App(): React.Node {
   return (
     <div className="App Vertical">
       <div className="Horizontal">
-        <SearchBar value={""} onChange={() => {}} />
+        <SearchBar
+          value={""}
+          onChange={(finalVal) => {
+            console.log(finalVal);
+          }}
+        />
       </div>
     </div>
   );
