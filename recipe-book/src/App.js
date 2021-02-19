@@ -10,6 +10,7 @@ import Icon from "./common/Icon.js";
 import SearchBar from "./common/SearchBar.js";
 import AccountWidget from "./common/AccountWidget.js";
 import Recipe from "./common/Recipe.js";
+import Modal from "./common/Modal.js";
 import useCookbookReducer from "./state/useCookbookReducer.js";
 
 const RECIPES_PER_ROW = 3;
@@ -25,6 +26,13 @@ function App(): React.Node {
       type: "SEARCH",
       search: search.length > 0 ? search : null,
     });
+
+  const selectRecipe = (recipe) => {
+    dispatch({
+      type: "SELECT_RECIPE",
+      recipe,
+    });
+  };
 
   const powerSearch = (recipe) => {
     if (state.search == null) {
@@ -43,9 +51,19 @@ function App(): React.Node {
       </div>
       <div className="RecipeGrid Centered">
         {HARDCODED_DEV_DATA.filter(powerSearch).map((recipe) => (
-          <Recipe recipe={recipe} key={"recipe" + recipe.id} />
+          <Recipe
+            recipe={recipe}
+            key={"recipe" + recipe.id}
+            onClick={() => selectRecipe(recipe)}
+          />
         ))}
       </div>
+      <Modal
+        isShown={state.selectedRecipe != null}
+        onClose={() => selectRecipe(null)}
+      >
+        <p>hello there!</p>
+      </Modal>
     </div>
   );
 }

@@ -14,9 +14,10 @@ export type RecipeType = {
 
 type Props = {
   recipe: RecipeType,
+  onClick: () => void,
 };
 
-function Recipe({ recipe }: Props): React.Node {
+function Recipe({ recipe, onClick }: Props): React.Node {
   const stars = [];
   for (let star = 1; star <= 5; star++) {
     if (recipe.stars >= star) {
@@ -30,7 +31,9 @@ function Recipe({ recipe }: Props): React.Node {
         width: "18vw",
         height: "18vw",
         padding: "8px",
+        cursor: "pointer",
       }}
+      onClick={onClick}
     >
       <Icon icon="faHamburger" size="6x" />
       <span>
