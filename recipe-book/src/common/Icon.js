@@ -8,11 +8,12 @@ type Props = {
   icon: string,
   margin?: string,
   size?: string,
+  color?: string,
 };
 
-function Icon({ icon, margin, size }: Props): React.Node {
+function Icon({ icon, margin, size, color }: Props): React.Node {
   return (
-    <span style={{ margin: margin ?? "0px" }}>
+    <span style={{ margin: margin ?? "0px", color }}>
       {icons[icon] != null ? (
         <FontAwesomeIcon icon={icons[icon]} size={size} />
       ) : (

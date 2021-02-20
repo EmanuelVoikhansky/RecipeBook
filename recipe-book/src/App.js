@@ -42,7 +42,9 @@ function App(): React.Node {
       return true;
     }
     const { id, name, instructions } = recipe;
-    return (id + name + instructions).includes(state.search);
+    return (id + name + instructions)
+      .toLowerCase()
+      .includes(state.search.toLowerCase());
   };
 
   return (
