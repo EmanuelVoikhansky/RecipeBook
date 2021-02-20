@@ -7,7 +7,8 @@ import {
   HARDCODED_DEV_ACCOUNT,
 } from "./constants/devData.js";
 import Icon from "./common/Icon.js";
-import SearchBar from "./common/SearchBar.js";
+import TextInput from "./common/TextInput.js";
+import RecipeForm from "./common/RecipeForm.js";
 import AccountWidget from "./common/AccountWidget.js";
 import Recipe from "./common/Recipe.js";
 import Modal from "./common/Modal.js";
@@ -20,6 +21,8 @@ function App(): React.Node {
     recipes: HARDCODED_DEV_DATA,
     account: HARDCODED_DEV_ACCOUNT,
   });
+
+  const { selectedRecipe } = state;
 
   const onSearch = (search) =>
     dispatch({
@@ -47,7 +50,13 @@ function App(): React.Node {
       <div className="SidePanel">
         {state.account ? <AccountWidget account={state.account} /> : null}
         <div className="VerticalSpacer" />
-        <SearchBar value={state.search ?? ""} onChange={onSearch} />
+        <TextInput
+          value={state.search ?? ""}
+          onChange={onSearch}
+          placeholder="Search: "
+          icon="faSearch"
+          debounce={500}
+        />
       </div>
       <div className="RecipeGrid Centered">
         {HARDCODED_DEV_DATA.filter(powerSearch).map((recipe) => (
@@ -59,10 +68,10 @@ function App(): React.Node {
         ))}
       </div>
       <Modal
-        isShown={state.selectedRecipe != null}
+        isShown={selectedRecipe != null}
         onClose={() => selectRecipe(null)}
       >
-        <p>hello there!</p>
+        {selectedRecipe ? <RecipeForm recipe={selectedRecipe} /> : null}
       </Modal>
     </div>
   );
