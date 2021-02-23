@@ -45,3 +45,14 @@
   margin: 24px;
   width: 100%;
 }
+
+.LargeButton {
+  height: 34px;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 8px;
+}
+
+.Confirm {
+  background-color: lightblue;
+}

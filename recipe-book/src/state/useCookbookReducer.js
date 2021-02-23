@@ -11,14 +11,14 @@ import type { Account } from "../common/AccountWidget.js";
  * once Reduce returns a new render cycle is kicked off.
  **/
 
-type State = {
+export type State = {
   recipes: Array<RecipeType>,
   search?: string,
   selectedRecipe?: RecipeType,
   account?: Account,
 };
 
-type Action =
+export type Action =
   | {
       type: "SET_RECIPES",
       recipes: Array<RecipeType>,
@@ -30,6 +30,10 @@ type Action =
   | {
       type: "SELECT_RECIPE",
       recipe: ?RecipeType,
+    }
+  | {
+      type: "UPDATE_RECIPE",
+      recipe: RecipeType,
     }
   | {
       type: "LOGIN",
@@ -59,6 +63,17 @@ const reduce = (state: State, action: Action): State => {
       return {
         ...state,
         selectedRecipe: action.recipe ?? undefined,
+      };
+    case "UPDATE_RECIPE":
+      return {
+        ...state,
+        selectedRecipe: undefined,
+        recipes: state.recipes.map((recipe) => {
+          if (recipe.id === action.recipe.id) {
+            return action.recipe;
+          }
+          return recipe;
+        }),
       };
     case "LOGIN":
       return {

@@ -57,6 +57,8 @@ function TextInput({
               resize: "none",
               border: "none",
               outline: "none",
+              height: "100%",
+              width: "100%",
               focus: { outline: "none" },
             }}
             value={curValue}

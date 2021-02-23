@@ -62,7 +62,7 @@ function App(): React.Node {
         />
       </div>
       <div className="RecipeGrid Centered">
-        {HARDCODED_DEV_DATA.filter(powerSearch).map((recipe) => (
+        {state.recipes.filter(powerSearch).map((recipe) => (
           <Recipe
             recipe={recipe}
             key={"recipe" + recipe.id}
@@ -74,7 +74,9 @@ function App(): React.Node {
         isShown={selectedRecipe != null}
         onClose={() => selectRecipe(null)}
       >
-        {selectedRecipe ? <RecipeForm recipe={selectedRecipe} /> : null}
+        {selectedRecipe ? (
+          <RecipeForm recipe={selectedRecipe} dispatch={dispatch} />
+        ) : null}
       </Modal>
     </div>
   );
