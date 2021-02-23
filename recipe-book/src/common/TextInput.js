@@ -13,6 +13,7 @@ type Props = {
   icon?: string,
   debounce?: number,
   margin?: string,
+  mode: "singleLine" | "textArea",
 };
 
 function TextInput({
@@ -22,6 +23,7 @@ function TextInput({
   placeholder,
   debounce,
   margin,
+  mode,
 }: Props): React.Node {
   const useDebounce = debounce != null && debounce > 0;
   const [debouncedValue, setDebouncedValue] = useDebouncedOnChange(
@@ -32,19 +34,42 @@ function TextInput({
   const curValue = useDebounce ? debouncedValue : value;
   const setValue = useDebounce ? setDebouncedValue : onChange;
   return (
-    <div className="Border" style={{ margin: margin ?? "" }}>
+    <div
+      className="Border"
+      style={{
+        margin: margin ?? "",
+        width: "100%",
+      }}
+    >
       <label>
         {icon != null ? <Icon icon={icon} margin="0px 4px 1px 0px" /> : null}
         {curValue.length === 0 ? placeholder : null}
-        <input
-          style={{ border: "none", focus: { outline: "none" } }}
-          type="text"
-          value={curValue}
-          onChange={(event) => setValue(event.target.value)}
-        />
+        {mode === "singleLine" ? (
+          <input
+            style={{ border: "none", focus: { outline: "none" } }}
+            type="text"
+            value={curValue}
+            onChange={(event) => setValue(event.target.value)}
+          />
+        ) : (
+          <textarea
+            style={{
+              resize: "none",
+              border: "none",
+              outline: "none",
+              focus: { outline: "none" },
+            }}
+            value={curValue}
+            onChange={(event) => setValue(event.target.value)}
+          />
+        )}
       </label>
     </div>
   );
 }
+
+TextInput.defaultProps = {
+  mode: "singleLine",
+};
 
 export default TextInput;

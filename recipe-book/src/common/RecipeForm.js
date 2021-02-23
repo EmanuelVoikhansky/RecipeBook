@@ -16,8 +16,8 @@ function RecipeForm({ recipe }: Props): React.Node {
     <div
       style={{
         width: "100%",
+        height: "calc(100% - 24px)",
         justifyContent: "space-between",
-        paddingLeft: "12px",
       }}
       className="Horizontal"
     >
@@ -26,12 +26,18 @@ function RecipeForm({ recipe }: Props): React.Node {
         <TextInput
           value={recipe.name}
           onChange={() => {}}
-          placeholder={"Recipe Name:"}
-          margin={"8px 0px 8px 0px"}
+          placeholder="Recipe Name:"
+          margin="8px 0px 8px 0px"
         />
         <StarRatingWidget stars={recipe.stars} />
       </div>
-      <div></div>
+      <TextInput
+        value={recipe.instructions}
+        onChange={() => {}}
+        placeholder="Instructions:"
+        margin="0px 20px 0px 40px"
+        mode="textArea"
+      />
     </div>
   );
 }

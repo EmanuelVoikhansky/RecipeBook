@@ -38,13 +38,14 @@ function App(): React.Node {
   };
 
   const powerSearch = (recipe) => {
-    if (state.search == null) {
+    const { search } = state;
+    if (search == null) {
       return true;
     }
     const { id, name, instructions } = recipe;
     return (id + name + instructions)
       .toLowerCase()
-      .includes(state.search.toLowerCase());
+      .includes(search.toLowerCase());
   };
 
   return (

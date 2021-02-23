@@ -23,7 +23,6 @@ const MODAL_BACKGROUND_STYLE = {
 };
 
 const MODAL_FOREGROUND_STYLE = {
-  margin: "40px",
   padding: "16px",
   zIndex: 2,
   borderRadius: "6px",
