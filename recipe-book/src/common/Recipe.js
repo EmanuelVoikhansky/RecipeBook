@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Icon from "./Icon.js";
+import Image from "./Image.js";
 import StarRatingWidget from "./StarRatingWidget.js";
 import "../App.css";
 
@@ -19,6 +20,7 @@ type Props = {
 };
 
 function Recipe({ recipe, onClick }: Props): React.Node {
+  const { imageUrl } = recipe;
   return (
     <div
       className="Border Vertical Centered"
@@ -30,7 +32,11 @@ function Recipe({ recipe, onClick }: Props): React.Node {
       }}
       onClick={onClick}
     >
-      <Icon icon="faHamburger" size="6x" />
+      {imageUrl != null ? (
+        <Image src={imageUrl} size="150px" />
+      ) : (
+        <Icon icon="faHamburger" size="6x" />
+      )}
       <span>
         <p>{recipe.name}</p>
         <StarRatingWidget stars={recipe.stars} />

@@ -4,6 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import Icon from "./Icon.js";
 import TextInput from "./TextInput.js";
+import EditableImage from "./EditableImage.js";
 import "../App.css";
 import StarRatingWidget from "./StarRatingWidget.js";
 import type { RecipeType } from "./Recipe.js";
@@ -44,7 +45,19 @@ function RecipeForm(props: Props): React.Node {
         className="Horizontal"
       >
         <div style={{ marginLeft: "16px" }}>
-          <Icon className="Border Centered" icon="faHamburger" size="10x" />
+          <EditableImage
+            fallback={
+              <Icon className="Border Centered" icon="faHamburger" size="10x" />
+            }
+            src={recipe.imageUrl}
+            onChange={(imageUrl) =>
+              setRecipe({
+                ...recipe,
+                imageUrl,
+              })
+            }
+            size="250px"
+          />
           <TextInput
             value={recipe.name}
             onChange={(name) =>

@@ -38,7 +38,7 @@ function TextInput({
       className="Border"
       style={{
         margin: margin ?? "",
-        width: "100%",
+        width: "calc(100% - 10px)",
       }}
     >
       <label>
