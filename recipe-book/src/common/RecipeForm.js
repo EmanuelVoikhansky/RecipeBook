@@ -13,6 +13,7 @@ import type { Action } from "../state/useCookbookReducer.js";
 type Props = {
   recipe: RecipeType,
   dispatch: (Action) => void,
+  editable: boolean,
 };
 
 function RecipeForm(props: Props): React.Node {
@@ -29,6 +30,8 @@ function RecipeForm(props: Props): React.Node {
       type: "SELECT_RECIPE",
       recipe: null,
     });
+
+  const editable = props.editable === true;
 
   return (
     <div
@@ -50,62 +53,80 @@ function RecipeForm(props: Props): React.Node {
               <Icon className="Border Centered" icon="faHamburger" size="10x" />
             }
             src={recipe.imageUrl}
-            onChange={(imageUrl) =>
-              setRecipe({
-                ...recipe,
-                imageUrl,
-              })
+            onChange={
+              editable
+                ? (imageUrl) =>
+                    setRecipe({
+                      ...recipe,
+                      imageUrl,
+                    })
+                : undefined
             }
             size="250px"
           />
           <TextInput
             value={recipe.name}
-            onChange={(name) =>
-              setRecipe({
-                ...recipe,
-                name,
-              })
+            onChange={
+              editable
+                ? (name) =>
+                    setRecipe({
+                      ...recipe,
+                      name,
+                    })
+                : undefined
             }
             placeholder="Recipe Name:"
             margin="8px 0px 8px 0px"
           />
           <StarRatingWidget
             stars={recipe.stars}
-            setStars={(stars) =>
-              setRecipe({
-                ...recipe,
-                stars,
-              })
+            setStars={
+              editable
+                ? (stars) =>
+                    setRecipe({
+                      ...recipe,
+                      stars,
+                    })
+                : undefined
             }
           />
         </div>
         <TextInput
           value={recipe.instructions}
-          onChange={(instructions) =>
-            setRecipe({
-              ...recipe,
-              instructions,
-            })
+          onChange={
+            editable
+              ? (instructions) =>
+                  setRecipe({
+                    ...recipe,
+                    instructions,
+                  })
+              : undefined
           }
           placeholder="Instructions:"
           margin="0px 20px 0px 40px"
           mode="textArea"
         />
       </div>
-      <div className="Horizontal">
-        <button
-          style={{ marginRight: "8px" }}
-          className="LargeButton"
-          onClick={cancel}
-        >
-          Cancel
-        </button>
-        <button className="LargeButton Confirm" onClick={save}>
-          Save
-        </button>
-      </div>
+      {editable ? (
+        <div className="Horizontal">
+          <button
+            style={{ marginRight: "8px" }}
+            className="LargeButton"
+            onClick={cancel}
+          >
+            Cancel
+          </button>
+          <button className="LargeButton Confirm" onClick={save}>
+            Save
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
+
+RecipeForm.defaultProps = {
+  editable: true,
+};
 
 export default RecipeForm;

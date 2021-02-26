@@ -9,12 +9,16 @@ import "../App.css";
 type Props = {
   fallback: React.Node,
   src: ?string,
-  onChange: (string) => void,
+  onChange?: (string) => void,
   size: string,
 };
 
 function EditableImage({ fallback, src, onChange, size }: Props): React.Node {
   const [mouseIn, setMouseIn] = useState(false);
+  const image = src != null ? <Image src={src} size={size} /> : fallback;
+  if (onChange == null) {
+    return image;
+  }
   return (
     <div
       style={{
@@ -59,7 +63,7 @@ function EditableImage({ fallback, src, onChange, size }: Props): React.Node {
             onChange(URL.createObjectURL(event.target.files[0]))
           }
         />
-        {src != null ? <Image src={src} size={size} /> : fallback}
+        {image}
       </div>
     </div>
   );

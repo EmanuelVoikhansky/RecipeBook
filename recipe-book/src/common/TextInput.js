@@ -8,7 +8,7 @@ import useDebouncedOnChange from "./useDebouncedOnChange.js";
 
 type Props = {
   value: string,
-  onChange: (string) => void,
+  onChange?: (string) => void,
   placeholder?: string,
   icon?: string,
   debounce?: number,
@@ -25,14 +25,15 @@ function TextInput({
   margin,
   mode,
 }: Props): React.Node {
+  const noOp = (_) => {};
   const useDebounce = debounce != null && debounce > 0;
   const [debouncedValue, setDebouncedValue] = useDebouncedOnChange(
     value,
-    onChange,
+    onChange ?? noOp,
     debounce ?? 500
   );
   const curValue = useDebounce ? debouncedValue : value;
-  const setValue = useDebounce ? setDebouncedValue : onChange;
+  const setValue = useDebounce ? setDebouncedValue : onChange ?? noOp;
   return (
     <div
       className="Border"
@@ -46,7 +47,11 @@ function TextInput({
         {curValue.length === 0 ? placeholder : null}
         {mode === "singleLine" ? (
           <input
-            style={{ border: "none", focus: { outline: "none" } }}
+            style={{
+              border: "none",
+              focus: { outline: "none" },
+              cursor: onChange == null ? "default" : undefined,
+            }}
             type="text"
             value={curValue}
             onChange={(event) => setValue(event.target.value)}
@@ -60,6 +65,7 @@ function TextInput({
               height: "100%",
               width: "100%",
               focus: { outline: "none" },
+              cursor: onChange == null ? "default" : undefined,
             }}
             value={curValue}
             onChange={(event) => setValue(event.target.value)}
