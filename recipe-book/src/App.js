@@ -60,6 +60,20 @@ function App(): React.Node {
           icon="faSearch"
           debounce={500}
         />
+        <button
+          style={{
+            marginTop: "8px",
+            width: "100%",
+          }}
+          className="LargeButton"
+          onClick={() =>
+            dispatch({
+              type: "ADD_RECIPE",
+            })
+          }
+        >
+          Add
+        </button>
       </div>
       <div className="RecipeGrid Centered">
         {state.recipes.filter(powerSearch).map((recipe) => (

@@ -41,6 +41,9 @@ export type Action =
     }
   | {
       type: "LOGOUT",
+    }
+  | {
+      type: "ADD_RECIPE",
     };
 
 const defaultState: State = {
@@ -84,6 +87,16 @@ const reduce = (state: State, action: Action): State => {
       return {
         ...state,
         account: undefined,
+      };
+    case "ADD_RECIPE":
+      return {
+        ...state,
+        selectedRecipe: {
+          id: state.recipes.length, //temporary workaround, server will set IDs in future
+          name: "",
+          stars: 0,
+          instructions: "",
+        },
       };
     default:
       throw "Invalid action type: " + action.type;
