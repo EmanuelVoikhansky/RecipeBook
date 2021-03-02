@@ -1,8 +1,6 @@
-// @flow
+//@flow
 
 import { useReducer } from "react";
-import type { RecipeType } from "../common/Recipe.js";
-import type { Account } from "../common/AccountWidget.js";
 
 /**
  * App state management lives here. The state represents the UI's data, actions
@@ -10,6 +8,19 @@ import type { Account } from "../common/AccountWidget.js";
  * into the next state. The react useReducer hook handles the state updates.
  * once Reduce returns a new render cycle is kicked off.
  **/
+
+export type RecipeType = {
+  id: number,
+  name: string,
+  stars: number,
+  imageUrl?: string,
+  instructions: string,
+};
+
+export type Account = {
+  name: string,
+  profilePicUrl?: string,
+};
 
 export type State = {
   recipes: Array<RecipeType>,

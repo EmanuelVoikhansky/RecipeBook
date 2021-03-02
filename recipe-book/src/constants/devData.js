@@ -1,7 +1,7 @@
 // @flow
 
-import type { RecipeType } from "../common/Recipe.js";
-import type { Account } from "../common/AccountWidget.js";
+import type { RecipeType } from "../state/useCookbookReducer.js";
+import type { Account } from "../state/useCookbookReducer.js";
 
 export const HARDCODED_DEV_ACCOUNT: Account = {
   name: "Paul Holly",

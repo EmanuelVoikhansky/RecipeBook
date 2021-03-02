@@ -7,7 +7,7 @@ import TextInput from "./TextInput.js";
 import EditableImage from "./EditableImage.js";
 import "../App.css";
 import StarRatingWidget from "./StarRatingWidget.js";
-import type { RecipeType } from "./Recipe.js";
+import type { RecipeType } from "../state/useCookbookReducer.js";
 import type { Action } from "../state/useCookbookReducer.js";
 
 type Props = {

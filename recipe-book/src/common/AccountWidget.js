@@ -3,14 +3,10 @@
 import * as React from "react";
 import Icon from "./Icon.js";
 import user from "../assets/user.jpg";
+import type { Account } from "../state/useCookbookReducer.js";
 
 type Props = {
   account: Account,
-};
-
-export type Account = {
-  name: string,
-  profilePicUrl?: string,
 };
 
 function AccountWidget({ account }: Props): React.Node {

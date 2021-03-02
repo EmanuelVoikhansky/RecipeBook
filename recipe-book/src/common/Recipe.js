@@ -5,14 +5,7 @@ import Icon from "./Icon.js";
 import Image from "./Image.js";
 import StarRatingWidget from "./StarRatingWidget.js";
 import "../App.css";
-
-export type RecipeType = {
-  id: number,
-  name: string,
-  stars: number,
-  imageUrl?: string,
-  instructions: string,
-};
+import type { RecipeType } from "../state/useCookbookReducer.js";
 
 type Props = {
   recipe: RecipeType,
