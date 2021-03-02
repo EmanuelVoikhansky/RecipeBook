@@ -13,6 +13,7 @@ type Props = {
   icon?: string,
   debounce?: number,
   margin?: string,
+  type: string,
   mode: "singleLine" | "textArea",
 };
 
@@ -24,6 +25,7 @@ function TextInput({
   debounce,
   margin,
   mode,
+  type,
 }: Props): React.Node {
   const noOp = (_) => {};
   const useDebounce = debounce != null && debounce > 0;
@@ -52,7 +54,7 @@ function TextInput({
               focus: { outline: "none" },
               cursor: onChange == null ? "default" : undefined,
             }}
-            type="text"
+            type={type}
             value={curValue}
             onChange={(event) => setValue(event.target.value)}
           />
@@ -68,6 +70,7 @@ function TextInput({
               cursor: onChange == null ? "default" : undefined,
             }}
             value={curValue}
+            type={type}
             onChange={(event) => setValue(event.target.value)}
           />
         )}
@@ -78,6 +81,7 @@ function TextInput({
 
 TextInput.defaultProps = {
   mode: "singleLine",
+  type: "text",
 };
 
 export default TextInput;

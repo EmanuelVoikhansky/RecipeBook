@@ -8,6 +8,8 @@ type Props = {
   isShown: boolean,
   onClose: () => void,
   children: React.Node,
+  width: string,
+  height: string,
 };
 
 const MODAL_BACKGROUND_STYLE = {
@@ -27,12 +29,16 @@ const MODAL_FOREGROUND_STYLE = {
   zIndex: 2,
   borderRadius: "6px",
   backgroundColor: "white",
-  width: "80vw",
-  height: "80vh",
   overflow: "auto",
 };
 
-function Modal({ isShown, onClose, children }: Props): React.Node {
+function Modal({
+  isShown,
+  onClose,
+  children,
+  height,
+  width,
+}: Props): React.Node {
   if (!isShown) {
     return null;
   }
@@ -43,7 +49,7 @@ function Modal({ isShown, onClose, children }: Props): React.Node {
       onClick={onClose}
     >
       <div
-        style={MODAL_FOREGROUND_STYLE}
+        style={{ ...MODAL_FOREGROUND_STYLE, height, width }}
         onClick={(event) => event.stopPropagation()}
       >
         <div
@@ -59,5 +65,10 @@ function Modal({ isShown, onClose, children }: Props): React.Node {
     </div>
   );
 }
+
+Modal.defaultProps = {
+  width: "80vw",
+  height: "80vh",
+};
 
 export default Modal;

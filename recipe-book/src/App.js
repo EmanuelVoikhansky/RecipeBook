@@ -9,6 +9,7 @@ import {
 import Icon from "./common/Icon.js";
 import TextInput from "./common/TextInput.js";
 import RecipeForm from "./common/RecipeForm.js";
+import LoginForm from "./common/LoginForm.js";
 import AccountWidget from "./common/AccountWidget.js";
 import Recipe from "./common/Recipe.js";
 import Modal from "./common/Modal.js";
@@ -19,7 +20,6 @@ const RECIPES_PER_ROW = 3;
 function App(): React.Node {
   const [state, dispatch] = useCookbookReducer({
     recipes: HARDCODED_DEV_DATA,
-    account: HARDCODED_DEV_ACCOUNT,
   });
 
   const { selectedRecipe } = state;
@@ -50,30 +50,58 @@ function App(): React.Node {
 
   return (
     <div className="App Horizontal">
-      <div className="SidePanel">
-        {state.account ? <AccountWidget account={state.account} /> : null}
-        <div className="VerticalSpacer" />
-        <TextInput
-          value={state.search ?? ""}
-          onChange={onSearch}
-          placeholder="Search: "
-          icon="faSearch"
-          debounce={500}
-        />
-        <button
-          style={{
-            marginTop: "8px",
-            width: "100%",
-          }}
-          className="LargeButton"
-          onClick={() =>
-            dispatch({
-              type: "ADD_RECIPE",
-            })
-          }
-        >
-          Add
-        </button>
+      <div className="SidePanel Vertical">
+        <div>
+          {state.account ? <AccountWidget account={state.account} /> : null}
+          <TextInput
+            value={state.search ?? ""}
+            onChange={onSearch}
+            placeholder="Search: "
+            icon="faSearch"
+            margin="8px 0px 8px 0px"
+            debounce={500}
+          />
+          {state.account ? (
+            <button
+              style={{
+                width: "100%",
+              }}
+              className="LargeButton"
+              onClick={() =>
+                dispatch({
+                  type: "ADD_RECIPE",
+                })
+              }
+            >
+              Add
+            </button>
+          ) : (
+            <LoginForm
+              onLoginSuccess={(account) =>
+                dispatch({
+                  type: "LOGIN",
+                  account,
+                })
+              }
+              onLoginFailure={() => {}}
+            />
+          )}
+        </div>
+        {state.account ? (
+          <button
+            style={{
+              width: "100%",
+            }}
+            className="LargeButton"
+            onClick={() =>
+              dispatch({
+                type: "LOGOUT",
+              })
+            }
+          >
+            Log Out
+          </button>
+        ) : null}
       </div>
       <div className="RecipeGrid Centered">
         {state.recipes.filter(powerSearch).map((recipe) => (
