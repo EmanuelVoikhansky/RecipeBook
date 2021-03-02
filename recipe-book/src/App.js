@@ -89,7 +89,11 @@ function App(): React.Node {
         onClose={() => selectRecipe(null)}
       >
         {selectedRecipe ? (
-          <RecipeForm recipe={selectedRecipe} dispatch={dispatch} />
+          <RecipeForm
+            recipe={selectedRecipe}
+            dispatch={dispatch}
+            editable={state.account?.id === selectedRecipe.author.id}
+          />
         ) : null}
       </Modal>
     </div>

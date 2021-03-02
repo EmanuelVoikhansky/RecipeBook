@@ -78,6 +78,7 @@ function RecipeForm(props: Props): React.Node {
             placeholder="Recipe Name:"
             margin="8px 0px 8px 0px"
           />
+          <p>By: {recipe.author.name}</p>
           <StarRatingWidget
             stars={recipe.stars}
             setStars={

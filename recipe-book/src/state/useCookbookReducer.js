@@ -15,9 +15,11 @@ export type RecipeType = {
   stars: number,
   imageUrl?: string,
   instructions: string,
+  author: Account,
 };
 
 export type Account = {
+  id: number,
   name: string,
   profilePicUrl?: string,
 };
@@ -62,6 +64,7 @@ const defaultState: State = {
 };
 
 const reduce = (state: State, action: Action): State => {
+  const { account } = state;
   switch (action.type) {
     case "SET_RECIPES":
       return {
@@ -100,6 +103,9 @@ const reduce = (state: State, action: Action): State => {
         account: undefined,
       };
     case "ADD_RECIPE":
+      if (account == null) {
+        throw "You must log in to add recipies";
+      }
       return {
         ...state,
         selectedRecipe: {
@@ -107,6 +113,7 @@ const reduce = (state: State, action: Action): State => {
           name: "",
           stars: 0,
           instructions: "",
+          author: account,
         },
       };
     default:
