@@ -13,6 +13,7 @@ type Props = {
   icon?: string,
   debounce?: number,
   margin?: string,
+  style?: Object,
   type: string,
   mode: "singleLine" | "textArea",
 };
@@ -26,6 +27,7 @@ function TextInput({
   margin,
   mode,
   type,
+  style,
 }: Props): React.Node {
   const noOp = (_) => {};
   const useDebounce = debounce != null && debounce > 0;
@@ -42,6 +44,7 @@ function TextInput({
       style={{
         margin: margin ?? "",
         width: "calc(100% - 10px)",
+        ...style,
       }}
     >
       <label>

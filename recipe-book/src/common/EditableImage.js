@@ -11,11 +11,23 @@ type Props = {
   src: ?string,
   onChange?: (string) => void,
   size: string,
+  styleOverride?: Object,
 };
 
-function EditableImage({ fallback, src, onChange, size }: Props): React.Node {
+function EditableImage({
+  fallback,
+  src,
+  onChange,
+  size,
+  styleOverride,
+}: Props): React.Node {
   const [mouseIn, setMouseIn] = useState(false);
-  const image = src != null ? <Image src={src} size={size} /> : fallback;
+  const image =
+    src != null ? (
+      <Image src={src} size={size} styleOverride={styleOverride} />
+    ) : (
+      fallback
+    );
   if (onChange == null) {
     return image;
   }

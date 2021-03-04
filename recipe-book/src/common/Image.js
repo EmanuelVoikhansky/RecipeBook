@@ -5,9 +5,10 @@ import * as React from "react";
 type Props = {
   src: string,
   size: string,
+  styleOverride?: Object,
 };
 
-function Image({ src, size }: Props): React.Node {
+function Image({ src, size, styleOverride }: Props): React.Node {
   return (
     <div
       style={{
@@ -18,6 +19,7 @@ function Image({ src, size }: Props): React.Node {
         borderRadius: "6px",
         height: size,
         width: size,
+        ...styleOverride,
       }}
     />
   );

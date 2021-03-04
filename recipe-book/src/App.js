@@ -52,7 +52,17 @@ function App(): React.Node {
     <div className="App Horizontal">
       <div className="SidePanel Vertical">
         <div>
-          {state.account ? <AccountWidget account={state.account} /> : null}
+          {state.account ? (
+            <AccountWidget
+              account={state.account}
+              onUpdateAccount={(account) =>
+                dispatch({
+                  type: "UPDATE_ACCOUNT",
+                  account,
+                })
+              }
+            />
+          ) : null}
           <TextInput
             value={state.search ?? ""}
             onChange={onSearch}

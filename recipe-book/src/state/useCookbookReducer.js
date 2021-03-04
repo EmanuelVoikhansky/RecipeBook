@@ -57,6 +57,10 @@ export type Action =
     }
   | {
       type: "ADD_RECIPE",
+    }
+  | {
+      type: "UPDATE_ACCOUNT",
+      account: Account,
     };
 
 const defaultState: State = {
@@ -91,6 +95,17 @@ const reduce = (state: State, action: Action): State => {
           }
           return recipe;
         }),
+      };
+    case "UPDATE_ACCOUNT":
+      if (state.account == null) {
+        throw "Cannot edit account when you're not logged in";
+      }
+      return {
+        ...state,
+        account: {
+          ...action.account,
+          id: state.account.id, // make sure update operation cannot change account id
+        },
       };
     case "LOGIN":
       return {

@@ -9,11 +9,19 @@ type Props = {
   margin?: string,
   size?: string,
   color?: string,
+  onClick?: () => void,
 };
 
-function Icon({ icon, margin, size, color }: Props): React.Node {
+function Icon({ icon, margin, size, color, onClick }: Props): React.Node {
   return (
-    <span style={{ margin: margin ?? "0px", color }}>
+    <span
+      style={{
+        cursor: onClick ? "pointer" : undefined,
+        margin: margin ?? "0px",
+        color,
+      }}
+      onClick={onClick}
+    >
       {icons[icon] != null ? (
         <FontAwesomeIcon icon={icons[icon]} size={size} />
       ) : (
