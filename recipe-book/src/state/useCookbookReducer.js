@@ -61,6 +61,10 @@ export type Action =
   | {
       type: "UPDATE_ACCOUNT",
       account: Account,
+    }
+  | {
+      type: "DELETE_RECIPE",
+      recipe: RecipeType,
     };
 
 const defaultState: State = {
@@ -130,6 +134,17 @@ const reduce = (state: State, action: Action): State => {
           instructions: "",
           author: account,
         },
+      };
+    case "DELETE_RECIPE":
+      if (account == null || action.recipe.author.id !== account.id) {
+        throw "You cannot delete this recipe";
+      }
+      return {
+        ...state,
+        selectedRecipe: undefined,
+        recipes: state.recipes.filter(
+          (recipe) => recipe.id != action.recipe.id
+        ),
       };
     default:
       throw "Invalid action type: " + action.type;

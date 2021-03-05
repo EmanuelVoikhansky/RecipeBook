@@ -31,6 +31,13 @@ function RecipeForm(props: Props): React.Node {
       recipe: null,
     });
 
+  const onDelete = () => {
+    props.dispatch({
+      type: "DELETE_RECIPE",
+      recipe,
+    });
+  };
+
   const editable = props.editable === true;
 
   return (
@@ -110,6 +117,13 @@ function RecipeForm(props: Props): React.Node {
       </div>
       {editable ? (
         <div className="Horizontal">
+          <button
+            style={{ marginRight: "8px" }}
+            className="LargeButton"
+            onClick={onDelete}
+          >
+            Delete
+          </button>
           <button
             style={{ marginRight: "8px" }}
             className="LargeButton"
