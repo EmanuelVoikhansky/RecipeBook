@@ -1,0 +1,18 @@
+type Recipe {
+  id: Int!
+  name: String!
+  stars: Int!
+  imageUrl: String!
+  instructions: String!
+  author: Author
+}
+
+type Author {
+  id: Int!
+  name: String!
+  profilePicUrl: String
+}
+
+type Query {
+  allRecipes: [Recipe!]
+}
