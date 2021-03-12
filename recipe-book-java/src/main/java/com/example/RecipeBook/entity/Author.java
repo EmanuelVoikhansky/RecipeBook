@@ -1,30 +1,34 @@
 package com.example.RecipeBook.entity;
 
 import io.leangen.graphql.annotations.GraphQLQuery;
-import java.util.Optional;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Authors")
 public class Author {
   @Id
   @GeneratedValue
   @GraphQLQuery(name = "id")
+  @Column(name = "id")
   private Long id;
 
   @GraphQLQuery(name = "name")
   private String name;
 
   @GraphQLQuery(name = "profilePicUrl", description = "URL of the authors profile pic")
-  private Optional<String> imageUrl = null;
+  private String imageUrl;
 
   private String email;
   // in a real app this should NEVER be a plain string. This is for example only.
   private String password;
 
-  public Author(String name, String email, String password) {
-    this.name = name;
+  public Author() {}
+
+  public Author(String email, String password) {
     this.email = email;
     this.password = password;
   }
@@ -42,11 +46,11 @@ public class Author {
     return this;
   }
 
-  public Optional<String> getImageUrl() {
+  public String getImageUrl() {
     return this.imageUrl;
   }
 
-  public Author setImageUrl(Optional<String> imageUrl) {
+  public Author setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
     return this;
   }
