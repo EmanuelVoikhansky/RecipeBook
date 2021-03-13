@@ -29,7 +29,7 @@ public class Recipe {
 
   @GraphQLQuery(name = "author", description = "Who wrote this recipe")
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "id", referencedColumnName = "id")
+  @JoinColumn(name = "recipe_id", referencedColumnName = "id")
   private Author author;
 
   public Recipe() {}

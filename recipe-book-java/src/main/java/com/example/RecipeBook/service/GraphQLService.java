@@ -1,6 +1,8 @@
 package com.example.RecipeBook.service;
 
+import com.example.RecipeBook.dto.Login;
 import com.example.RecipeBook.entity.*;
+import graphql.GraphQLException;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
@@ -23,10 +25,15 @@ public class GraphQLService {
   }
 
   @GraphQLQuery(name = "login", description = "attempts login with given credentials")
-  public Optional<Author> login(
+  public Login login(
       @GraphQLArgument(name = "email") String email,
-      @GraphQLArgument(name = "password") String passwordAttempt) {
-    return authorRepo.findOne(Example.of(new Author(email, passwordAttempt)));
+      @GraphQLArgument(name = "password") String passwordAttempt)
+      throws GraphQLException {
+    Author user =
+        authorRepo
+            .findOne(Example.of(new Author(email, passwordAttempt)))
+            .orElseThrow(() -> new GraphQLException("Invalid login"));
+    return new Login(user);
   }
 
   @GraphQLQuery(name = "all_recipes")

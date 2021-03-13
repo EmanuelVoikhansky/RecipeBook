@@ -1,5 +1,6 @@
 package com.example.RecipeBook.entity;
 
+import io.leangen.graphql.annotations.GraphQLIgnore;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,6 +60,7 @@ public class Author {
     return this.email;
   }
 
+  @GraphQLIgnore
   public boolean isValidLogin(String passwordAttempt) {
     return this.password.equals(passwordAttempt);
   }
