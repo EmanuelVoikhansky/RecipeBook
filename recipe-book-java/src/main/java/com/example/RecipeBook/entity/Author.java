@@ -23,9 +23,9 @@ public class Author {
   @GraphQLQuery(name = "profilePicUrl", description = "URL of the authors profile pic")
   private String imageUrl;
 
-  private String email;
+  @GraphQLIgnore private String email;
   // in a real app this should NEVER be a plain string. This is for example only.
-  private String password;
+  @GraphQLIgnore private String password;
 
   public Author() {}
 
