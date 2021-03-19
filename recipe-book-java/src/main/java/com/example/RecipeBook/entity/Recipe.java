@@ -9,26 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Recipe {
+public class Recipe extends RecipeDraft {
   @Id
   @GeneratedValue
   @GraphQLQuery(name = "id")
   private Long id;
 
-  @GraphQLQuery(name = "name")
-  private String name;
-
-  @GraphQLQuery(name = "stars", description = "Overall average rating out of 5 stars")
-  private float stars = 0;
-
-  @GraphQLQuery(name = "imageUrl", description = "Cover image for this recipe")
-  private String imageUrl;
-
-  @GraphQLQuery(name = "instructions", description = "How to cook this recipe")
-  private String instructions = "";
-
   @GraphQLQuery(name = "author", description = "Who wrote this recipe")
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "recipe_id", referencedColumnName = "id")
   private Author author;
 
@@ -40,43 +28,19 @@ public class Recipe {
     this.instructions = instructions;
   }
 
+  public Recipe(RecipeDraft draft) {
+    this.name = draft.name;
+    this.stars = draft.stars;
+    this.instructions = draft.instructions;
+    this.imageUrl = draft.imageUrl;
+  }
+
   public Long getId() {
     return id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public Recipe setName(String name) {
-    this.name = name;
-    return this;
-  }
-
-  public float getStars() {
-    return this.stars;
-  }
-
-  public Recipe setStars(float stars) {
-    this.stars = stars;
-    return this;
-  }
-
-  public String getImageUrl() {
-    return this.imageUrl;
-  }
-
-  public Recipe setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-    return this;
-  }
-
-  public String getInstructions() {
-    return this.instructions;
-  }
-
-  public Recipe setInstructions(String instructions) {
-    this.instructions = instructions;
+  public Recipe setId(Long id) {
+    this.id = id;
     return this;
   }
 

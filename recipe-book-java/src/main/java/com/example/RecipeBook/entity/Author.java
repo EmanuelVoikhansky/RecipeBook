@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Author {
   @Id
   @GeneratedValue
-  @GraphQLQuery(name = "id")
+  @GraphQLQuery(name = "id", description = "Auto generated on creation, do not set")
   @Column(name = "id")
   private Long id;
 
@@ -25,7 +25,7 @@ public class Author {
 
   @GraphQLIgnore private String email;
   // in a real app this should NEVER be a plain string. This is for example only.
-  @GraphQLIgnore private String password;
+  private String password;
 
   public Author() {}
 
@@ -56,6 +56,7 @@ public class Author {
     return this;
   }
 
+  @GraphQLIgnore
   public String getEmail() {
     return this.email;
   }

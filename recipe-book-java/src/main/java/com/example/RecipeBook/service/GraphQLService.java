@@ -10,8 +10,6 @@ import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class GraphQLService {
 
   @Autowired private RecipeRepository recipeRepo;
   @Autowired private AuthorRepository authorRepo;
-  @Autowired private HttpServletRequest request;
+  @Autowired private ViewerContext context;
 
   @GraphQLMutation(name = "login", description = "attempts login with given credentials")
   public Login login(
@@ -34,10 +32,7 @@ public class GraphQLService {
             .findOne(Example.of(new Author(email, passwordAttempt)))
             .orElseThrow(() -> new GraphQLException("Invalid login"));
     Login login = new Login(user);
-    // in a real app I'd set up a clustered solution. Redis or a Cassandra node with TTL.
-    HttpSession session = request.getSession();
-    session.setAttribute("token", login.getToken());
-    session.setAttribute("user", user);
+    context.login(login);
     return login;
   }
 
@@ -46,26 +41,43 @@ public class GraphQLService {
     return recipeRepo.findAll();
   }
 
-  @GraphQLQuery(name = "authors")
-  @LoginRequired
-  public List<Author> getAllAuthors() {
-    return authorRepo.findAll();
-  }
-
   @GraphQLQuery(name = "recipe", description = "get a recipe by ID")
   public Optional<Recipe> getRecipeById(@GraphQLArgument(name = "id") Long id) {
     return recipeRepo.findById(id);
   }
 
-  @GraphQLMutation(name = "saveRecipe", description = "save/update a recipe")
+  @GraphQLMutation(
+    name = "saveRecipe",
+    description = "save/update a recipe. Leave id blank for new recipe, specify it for an update"
+  )
   @LoginRequired
-  public Recipe saveRecipe(@GraphQLArgument(name = "recipe") Recipe recipe) {
-    return recipeRepo.save(recipe);
+  public Recipe saveRecipe(
+      @GraphQLArgument(name = "recipe") RecipeDraft draft, @GraphQLArgument(name = "id") Long id) {
+    Recipe toUpsert = new Recipe(draft);
+    Author originalAuthor = context.getUserX();
+    if (id != null) {
+      Recipe existing = loadRecipeById(id);
+      if (existing.getAuthor().getId() != originalAuthor.getId()) {
+        throw new GraphQLException("You can only edit recipes you own");
+      }
+      toUpsert.setId(id);
+    }
+    toUpsert.setAuthor(originalAuthor);
+    return recipeRepo.save(toUpsert);
   }
 
   @GraphQLMutation(name = "deleteRecipe")
   @LoginRequired
   public void deleteRecipe(@GraphQLArgument(name = "id") Long id) {
-    recipeRepo.deleteById(id);
+    Recipe toDelete = loadRecipeById(id);
+    Author user = context.getUserX();
+    if (toDelete.getAuthor().getId() != user.getId()) {
+      throw new GraphQLException("You can only delete recipes you own");
+    }
+    recipeRepo.deleteById(toDelete.getId());
+  }
+
+  private Recipe loadRecipeById(long id) {
+    return recipeRepo.findById(id).orElseThrow(() -> new GraphQLException("Not found"));
   }
 }

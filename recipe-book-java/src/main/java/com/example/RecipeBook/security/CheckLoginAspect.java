@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class CheckLoginAspect {
+  public static final String TOKEN = "token";
+
   @Autowired private HttpServletRequest request;
 
   @Pointcut("execution(@com.example.RecipeBook.security.LoginRequired * *(..))")
@@ -29,8 +31,8 @@ public class CheckLoginAspect {
   @Around(
       "publicMethod() && methodRequiresLogin() && (methodAnnotatedWithGraphQLQuery() || methodAnnotatedWithGraphQLMutation())")
   public Object requirePermission(ProceedingJoinPoint joinPoint) throws Throwable {
-    Object sessionToken = request.getSession().getAttribute("token");
-    String headerToken = request.getHeader("token");
+    Object sessionToken = request.getSession().getAttribute(TOKEN);
+    String headerToken = request.getHeader(TOKEN);
     if (sessionToken == null || !sessionToken.equals(headerToken)) {
       throw new GraphQLException("Not Authorized");
     }
