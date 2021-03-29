@@ -13,14 +13,33 @@ import LoginForm from "./common/LoginForm.js";
 import AccountWidget from "./common/AccountWidget.js";
 import Recipe from "./common/Recipe.js";
 import Modal from "./common/Modal.js";
+import useQuery from "./common/useQuery.js";
 import useCookbookReducer from "./state/useCookbookReducer.js";
 
 const RECIPES_PER_ROW = 3;
 
+const ALL_RECIPES = `
+  query {
+    all_recipes {
+      id
+      name
+      instructions
+      author {
+        name
+      }
+    }
+  }
+`;
+
 function App(): React.Node {
-  const [state, dispatch] = useCookbookReducer({
-    recipes: HARDCODED_DEV_DATA,
-  });
+  const [state, dispatch] = useCookbookReducer();
+
+  const [recipes] = useQuery(ALL_RECIPES, {}, (response) =>
+    dispatch({
+      type: "SET_RECIPES",
+      recipes: response.data.all_recipes,
+    })
+  );
 
   const { selectedRecipe } = state;
 
