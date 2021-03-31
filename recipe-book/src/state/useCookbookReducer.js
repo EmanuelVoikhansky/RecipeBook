@@ -29,6 +29,7 @@ export type State = {
   search?: string,
   selectedRecipe?: RecipeType,
   account?: Account,
+  securityToken?: string,
 };
 
 export type Action =
@@ -51,6 +52,7 @@ export type Action =
   | {
       type: "LOGIN",
       account: Account,
+      token: string,
     }
   | {
       type: "LOGOUT",
@@ -115,6 +117,7 @@ const reduce = (state: State, action: Action): State => {
       return {
         ...state,
         account: action.account,
+        securityToken: action.token,
       };
     case "LOGOUT":
       return {

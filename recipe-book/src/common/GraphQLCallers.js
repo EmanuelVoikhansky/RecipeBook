@@ -34,13 +34,7 @@ async function fetchGraphQL(text, variables, headers) {
  *  Important: query will run once when useQuery is called. To call again you MUST
  *  use the reloadQueryNow() method returned.
  **/
-export default function useQuery(
-  query,
-  variables,
-  onComplete,
-  onError,
-  headers
-) {
+export function useQuery(query, variables, onComplete, onError, headers) {
   const [requestStatus, setRequestStatus] = useState({
     inFlight: true,
   });
@@ -59,7 +53,12 @@ export default function useQuery(
           });
           return;
         }
-        onComplete && onComplete(response);
+        if (response.errors != null) {
+          const error = response.errors[0]?.message ?? "Unknown error";
+          onError ? onError(error) : console.error(error);
+        } else {
+          onComplete && onComplete(response);
+        }
         setRequestStatus({
           inFlight: false,
           data: response.data,
@@ -74,4 +73,20 @@ export default function useQuery(
     };
   }, [reload]);
   return [requestStatus.data, requestStatus.inFlight, () => setReload(!reload)];
+}
+
+export function commitMutation(query, variables, onComplete, onError, headers) {
+  fetchGraphQL(query, variables, headers ?? {})
+    .then((response) => {
+      debugger;
+      if (response.errors != null) {
+        const error = response.errors[0]?.message ?? "Unknown error";
+        onError ? onError(error) : console.error(error);
+      } else {
+        onComplete && onComplete(response);
+      }
+    })
+    .catch((error) => {
+      onError ? onError(error) : console.error(error);
+    });
 }

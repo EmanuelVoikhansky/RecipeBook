@@ -13,7 +13,7 @@ import LoginForm from "./common/LoginForm.js";
 import AccountWidget from "./common/AccountWidget.js";
 import Recipe from "./common/Recipe.js";
 import Modal from "./common/Modal.js";
-import useQuery from "./common/useQuery.js";
+import { useQuery } from "./common/GraphQLCallers.js";
 import useCookbookReducer from "./state/useCookbookReducer.js";
 
 const RECIPES_PER_ROW = 3;
@@ -106,13 +106,13 @@ function App(): React.Node {
             </button>
           ) : (
             <LoginForm
-              onLoginSuccess={(account) =>
+              onLoginSuccess={(account, token) =>
                 dispatch({
                   type: "LOGIN",
                   account,
+                  token,
                 })
               }
-              onLoginFailure={() => {}}
             />
           )}
         </div>
