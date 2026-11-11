@@ -1,7 +1,5 @@
-// @flow
-
-import type { RecipeType } from "../state/useCookbookReducer.js";
-import type { Account } from "../state/useCookbookReducer.js";
+import type { RecipeType } from "../state/useCookbookReducer";
+import type { Account } from "../state/useCookbookReducer";
 
 export const HARDCODED_DEV_ACCOUNT: Account = {
   id: 1,

@@ -1,5 +1,3 @@
-//@flow
-
 import { useReducer } from "react";
 
 /**
@@ -38,11 +36,11 @@ export type Action =
     }
   | {
       type: "SEARCH",
-      search: ?string,
+      search: string | null | undefined,
     }
   | {
       type: "SELECT_RECIPE",
-      recipe: ?RecipeType,
+      recipe: RecipeType | null | undefined,
     }
   | {
       type: "UPDATE_RECIPE",
@@ -147,12 +145,12 @@ const reduce = (state: State, action: Action): State => {
         ),
       };
     default:
-      throw "Invalid action type: " + action.type;
+      throw "Invalid action type: " + (action as Action).type;
   }
 };
 
 export default function useCookbookReducer(
   startingState?: State
-): [State, (Action) => void] {
+): [State, (action: Action) => void] {
   return useReducer(reduce, startingState ?? defaultState);
 }

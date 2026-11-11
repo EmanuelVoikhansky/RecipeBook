@@ -1,43 +1,42 @@
-// @flow
-
 import "./App.css";
 import * as React from "react";
 import {
   HARDCODED_DEV_DATA,
   HARDCODED_DEV_ACCOUNT,
-} from "./constants/devData.js";
-import Icon from "./common/Icon.js";
-import TextInput from "./common/TextInput.js";
-import RecipeForm from "./common/RecipeForm.js";
-import LoginForm from "./common/LoginForm.js";
-import AccountWidget from "./common/AccountWidget.js";
-import Recipe from "./common/Recipe.js";
-import Modal from "./common/Modal.js";
-import useCookbookReducer from "./state/useCookbookReducer.js";
+} from "./constants/devData";
+import Icon from "./common/Icon";
+import TextInput from "./common/TextInput";
+import RecipeForm from "./common/RecipeForm";
+import LoginForm from "./common/LoginForm";
+import AccountWidget from "./common/AccountWidget";
+import Recipe from "./common/Recipe";
+import Modal from "./common/Modal";
+import useCookbookReducer from "./state/useCookbookReducer";
+import type { RecipeType } from "./state/useCookbookReducer";
 
 const RECIPES_PER_ROW = 3;
 
-function App(): React.Node {
+function App(): JSX.Element {
   const [state, dispatch] = useCookbookReducer({
     recipes: HARDCODED_DEV_DATA,
   });
 
   const { selectedRecipe } = state;
 
-  const onSearch = (search) =>
+  const onSearch = (search: string) =>
     dispatch({
       type: "SEARCH",
       search: search.length > 0 ? search : null,
     });
 
-  const selectRecipe = (recipe) => {
+  const selectRecipe = (recipe: RecipeType | null) => {
     dispatch({
       type: "SELECT_RECIPE",
       recipe,
     });
   };
 
-  const powerSearch = (recipe) => {
+  const powerSearch = (recipe: RecipeType) => {
     const { search } = state;
     if (search == null) {
       return true;

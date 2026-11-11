@@ -1,19 +1,17 @@
-// @flow
-
 import * as React from "react";
 import "../App.css";
 import { useState, useMemo } from "react";
-import Icon from "./Icon.js";
-import useDebouncedOnChange from "./useDebouncedOnChange.js";
+import Icon from "./Icon";
+import useDebouncedOnChange from "./useDebouncedOnChange";
 
 type Props = {
   value: string,
-  onChange?: (string) => void,
+  onChange?: (value: string) => void,
   placeholder?: string,
   icon?: string,
   debounce?: number,
   margin?: string,
-  style?: Object,
+  style?: React.CSSProperties,
   type: string,
   mode: "singleLine" | "textArea",
 };
@@ -28,8 +26,8 @@ function TextInput({
   mode,
   type,
   style,
-}: Props): React.Node {
-  const noOp = (_) => {};
+}: Props): JSX.Element {
+  const noOp = (_: string) => {};
   const useDebounce = debounce != null && debounce > 0;
   const [debouncedValue, setDebouncedValue] = useDebouncedOnChange(
     value,
@@ -54,7 +52,6 @@ function TextInput({
           <input
             style={{
               border: "none",
-              focus: { outline: "none" },
               cursor: onChange == null ? "default" : undefined,
             }}
             type={type}
@@ -69,11 +66,9 @@ function TextInput({
               outline: "none",
               height: "100%",
               width: "100%",
-              focus: { outline: "none" },
               cursor: onChange == null ? "default" : undefined,
             }}
             value={curValue}
-            type={type}
             onChange={(event) => setValue(event.target.value)}
           />
         )}

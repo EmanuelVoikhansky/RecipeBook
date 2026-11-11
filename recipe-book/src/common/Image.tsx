@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 
 type Props = {
   src: string,
   size: string,
-  styleOverride?: Object,
+  styleOverride?: React.CSSProperties,
 };
 
-function Image({ src, size, styleOverride }: Props): React.Node {
+function Image({ src, size, styleOverride }: Props): JSX.Element {
   return (
     <div
       style={{

@@ -1,17 +1,15 @@
-// @flow
-
 import * as React from "react";
 import { useState } from "react";
-import Icon from "./Icon.js";
-import EditableImage from "./EditableImage.js";
-import TextInput from "./TextInput.js";
-import Image from "./Image.js";
+import Icon from "./Icon";
+import EditableImage from "./EditableImage";
+import TextInput from "./TextInput";
+import Image from "./Image";
 import user from "../assets/user.jpg";
-import type { Account } from "../state/useCookbookReducer.js";
+import type { Account } from "../state/useCookbookReducer";
 
 type Props = {
   account: Account,
-  onUpdateAccount: (Account) => void,
+  onUpdateAccount: (account: Account) => void,
 };
 
 const PORTRAIT_FALLBACK = {
@@ -19,7 +17,7 @@ const PORTRAIT_FALLBACK = {
   borderRadius: "50%",
 };
 
-function AccountWidget(props: Props): React.Node {
+function AccountWidget(props: Props): JSX.Element {
   const [account, setAccount] = useState(props.account);
   const [editMode, setEditMode] = useState(false);
 
@@ -50,7 +48,7 @@ function AccountWidget(props: Props): React.Node {
           <TextInput
             value={account.name}
             onChange={(name) => setAccount({ ...account, name })}
-            placeHolder="Name: "
+            placeholder="Name: "
             margin="16px 0px 0px 8px"
             style={{ height: "24px" }}
           />
