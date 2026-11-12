@@ -1,14 +1,11 @@
 import * as React from "react";
 import "../App.css";
-import { useState, useMemo } from "react";
-import Icon from "./Icon";
 import useDebouncedOnChange from "./useDebouncedOnChange";
 
 type Props = {
   value: string,
   onChange?: (value: string) => void,
   placeholder?: string,
-  icon?: string,
   debounce?: number,
   margin?: string,
   style?: React.CSSProperties,
@@ -19,7 +16,6 @@ type Props = {
 function TextInput({
   value,
   onChange,
-  icon,
   placeholder,
   debounce,
   margin,
@@ -36,43 +32,27 @@ function TextInput({
   );
   const curValue = useDebounce ? debouncedValue : value;
   const setValue = useDebounce ? setDebouncedValue : onChange ?? noOp;
+  const readOnly = onChange == null;
   return (
-    <div
-      className="Border"
-      style={{
-        margin: margin ?? "",
-        width: "calc(100% - 10px)",
-        ...style,
-      }}
-    >
-      <label>
-        {icon != null ? <Icon icon={icon} margin="0px 4px 1px 0px" /> : null}
-        {curValue.length === 0 ? placeholder : null}
-        {mode === "singleLine" ? (
-          <input
-            style={{
-              border: "none",
-              cursor: onChange == null ? "default" : undefined,
-            }}
-            type={type}
-            value={curValue}
-            onChange={(event) => setValue(event.target.value)}
-          />
-        ) : (
-          <textarea
-            style={{
-              resize: "none",
-              border: "none",
-              outline: "none",
-              height: "100%",
-              width: "100%",
-              cursor: onChange == null ? "default" : undefined,
-            }}
-            value={curValue}
-            onChange={(event) => setValue(event.target.value)}
-          />
-        )}
-      </label>
+    <div className="TextInput" style={{ margin: margin ?? "", ...style }}>
+      {mode === "singleLine" ? (
+        <input
+          type={type}
+          value={curValue}
+          placeholder={placeholder}
+          aria-label={placeholder}
+          readOnly={readOnly}
+          onChange={(event) => setValue(event.target.value)}
+        />
+      ) : (
+        <textarea
+          value={curValue}
+          placeholder={placeholder}
+          aria-label={placeholder}
+          readOnly={readOnly}
+          onChange={(event) => setValue(event.target.value)}
+        />
+      )}
     </div>
   );
 }

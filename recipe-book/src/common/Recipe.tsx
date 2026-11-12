@@ -13,26 +13,19 @@ type Props = {
 function Recipe({ recipe, onClick }: Props): JSX.Element {
   const { imageUrl } = recipe;
   return (
-    <div
-      className="Border Vertical Centered"
-      style={{
-        width: "18vw",
-        height: "18vw",
-        padding: "8px",
-        cursor: "pointer",
-      }}
-      onClick={onClick}
-    >
+    <article className="RecipeCard Vertical" onClick={onClick}>
       {imageUrl != null ? (
         <Image src={imageUrl} size="150px" />
       ) : (
-        <Icon icon="faHamburger" size="6x" />
+        <Icon
+          icon="faHamburger"
+          size="6x"
+          color="var(--pico-muted-color)"
+        />
       )}
-      <span>
-        <p>{recipe.name}</p>
-        <StarRatingWidget stars={recipe.stars} />
-      </span>
-    </div>
+      <p className="RecipeCardName">{recipe.name}</p>
+      <StarRatingWidget stars={recipe.stars} />
+    </article>
   );
 }
 

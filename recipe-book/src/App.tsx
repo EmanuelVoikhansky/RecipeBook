@@ -11,6 +11,7 @@ import LoginForm from "./common/LoginForm";
 import AccountWidget from "./common/AccountWidget";
 import Recipe from "./common/Recipe";
 import Modal from "./common/Modal";
+import ThemeToggle from "./common/ThemeToggle";
 import useCookbookReducer from "./state/useCookbookReducer";
 import type { RecipeType } from "./state/useCookbookReducer";
 
@@ -51,6 +52,10 @@ function App(): JSX.Element {
     <div className="App Horizontal">
       <div className="SidePanel Vertical">
         <div>
+          <div className="SidePanelHeader Horizontal">
+            <h1>Cookbook</h1>
+            <ThemeToggle />
+          </div>
           {state.account ? (
             <AccountWidget
               account={state.account}
@@ -65,9 +70,9 @@ function App(): JSX.Element {
           <TextInput
             value={state.search ?? ""}
             onChange={onSearch}
-            placeholder="Search: "
-            icon="faSearch"
-            margin="8px 0px 8px 0px"
+            type="search"
+            placeholder="Search recipes"
+            margin="0px 0px 16px 0px"
             debounce={500}
           />
           {state.account ? (
@@ -75,7 +80,6 @@ function App(): JSX.Element {
               style={{
                 width: "100%",
               }}
-              className="LargeButton"
               onClick={() =>
                 dispatch({
                   type: "ADD_RECIPE",
@@ -101,7 +105,7 @@ function App(): JSX.Element {
             style={{
               width: "100%",
             }}
-            className="LargeButton"
+            className="secondary outline"
             onClick={() =>
               dispatch({
                 type: "LOGOUT",
@@ -112,7 +116,7 @@ function App(): JSX.Element {
           </button>
         ) : null}
       </div>
-      <div className="RecipeGrid Centered">
+      <div className="RecipeGrid">
         {state.recipes.filter(powerSearch).map((recipe) => (
           <Recipe
             recipe={recipe}

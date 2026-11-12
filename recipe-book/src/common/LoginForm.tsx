@@ -15,17 +15,6 @@ function LoginForm({ onLoginSuccess, onLoginFailure }: Props): JSX.Element {
   const [show, setShown] = useState(false);
   const [userName, setUserName] = useState("");
   const [pwd, setPwd] = useState("");
-  const loginButton = (
-    <button
-      style={{
-        width: "100%",
-      }}
-      className="LargeButton"
-      onClick={() => setShown(true)}
-    >
-      Login
-    </button>
-  );
   return (
     <div
       style={{
@@ -36,7 +25,6 @@ function LoginForm({ onLoginSuccess, onLoginFailure }: Props): JSX.Element {
         style={{
           width: "100%",
         }}
-        className="LargeButton"
         onClick={() => setShown(true)}
       >
         Login
@@ -44,27 +32,26 @@ function LoginForm({ onLoginSuccess, onLoginFailure }: Props): JSX.Element {
       <Modal
         isShown={show}
         onClose={() => setShown(false)}
-        height={"200px"}
-        width={"400px"}
+        height="auto"
+        width="400px"
       >
         <div className="Vertical" style={{ alignItems: "flex-end" }}>
           <TextInput
             value={userName}
             onChange={setUserName}
-            placeholder="Username: "
-            margin="16px 0px 8px 0px"
+            placeholder="Username"
+            margin="0px 0px 8px 0px"
+            style={{ width: "100%" }}
           />
           <TextInput
             value={pwd}
             onChange={setPwd}
-            placeholder="Password: "
+            placeholder="Password"
             type="password"
             margin="0px 0px 16px 0px"
+            style={{ width: "100%" }}
           />
-          <button
-            className="LargeButton Confirm"
-            onClick={() => onLoginSuccess(HARDCODED_DEV_ACCOUNT)}
-          >
+          <button onClick={() => onLoginSuccess(HARDCODED_DEV_ACCOUNT)}>
             Login
           </button>
         </div>

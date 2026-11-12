@@ -13,7 +13,7 @@ type Props = {
 };
 
 const PORTRAIT_FALLBACK = {
-  border: "1px solid black",
+  border: "1px solid var(--pico-muted-border-color)",
   borderRadius: "50%",
 };
 
@@ -26,13 +26,8 @@ function AccountWidget(props: Props): JSX.Element {
   );
 
   return (
-    <div
-      className="Border Horizontal"
-      style={{
-        justifyContent: "space-between",
-      }}
-    >
-      <span className="Horizontal">
+    <article className="AccountWidget Horizontal">
+      <span className="AccountWidgetIdentity Horizontal">
         <EditableImage
           fallback={fallback}
           src={account.profilePicUrl}
@@ -48,17 +43,15 @@ function AccountWidget(props: Props): JSX.Element {
           <TextInput
             value={account.name}
             onChange={(name) => setAccount({ ...account, name })}
-            placeholder="Name: "
-            margin="16px 0px 0px 8px"
-            style={{ height: "24px" }}
+            placeholder="Name"
+            style={{ flex: 1, minWidth: "8rem" }}
           />
         ) : (
-          <p>{account.name}</p>
+          <strong>{account.name}</strong>
         )}
       </span>
       {editMode ? (
         <button
-          className="LargeButton"
           onClick={() => {
             props.onUpdateAccount(account);
             setEditMode(false);
@@ -73,7 +66,7 @@ function AccountWidget(props: Props): JSX.Element {
           onClick={() => setEditMode(true)}
         />
       )}
-    </div>
+    </article>
   );
 }
 

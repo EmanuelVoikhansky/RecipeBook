@@ -39,23 +39,16 @@ function RecipeForm(props: Props): JSX.Element {
   const editable = props.editable === true;
 
   return (
-    <div
-      className="Vertical"
-      style={{ alignItems: "flex-end", height: "calc(100% - 24px)" }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: "calc(100% - 24px)",
-          margin: "16px 0px 16px 0px",
-          justifyContent: "space-between",
-        }}
-        className="Horizontal"
-      >
-        <div style={{ marginLeft: "16px" }}>
+    <div className="RecipeForm Vertical">
+      <div className="RecipeFormBody Horizontal">
+        <div className="RecipeFormDetails">
           <EditableImage
             fallback={
-              <Icon icon="faHamburger" size="10x" />
+              <Icon
+                icon="faHamburger"
+                size="10x"
+                color="var(--pico-muted-color)"
+              />
             }
             src={recipe.imageUrl}
             onChange={
@@ -80,8 +73,8 @@ function RecipeForm(props: Props): JSX.Element {
                     })
                 : undefined
             }
-            placeholder="Recipe Name:"
-            margin="8px 0px 8px 0px"
+            placeholder="Recipe name"
+            margin="16px 0px 8px 0px"
           />
           <p>By: {recipe.author.name}</p>
           <StarRatingWidget
@@ -108,30 +101,20 @@ function RecipeForm(props: Props): JSX.Element {
                   })
               : undefined
           }
-          placeholder="Instructions:"
-          margin="0px 20px 0px 40px"
+          placeholder="Instructions"
           mode="textArea"
+          style={{ flex: 1 }}
         />
       </div>
       {editable ? (
-        <div className="Horizontal">
-          <button
-            style={{ marginRight: "8px" }}
-            className="LargeButton"
-            onClick={onDelete}
-          >
+        <div className="ButtonRow Horizontal">
+          <button className="outline Danger" onClick={onDelete}>
             Delete
           </button>
-          <button
-            style={{ marginRight: "8px" }}
-            className="LargeButton"
-            onClick={cancel}
-          >
+          <button className="secondary" onClick={cancel}>
             Cancel
           </button>
-          <button className="LargeButton Confirm" onClick={save}>
-            Save
-          </button>
+          <button onClick={save}>Save</button>
         </div>
       ) : null}
     </div>
