@@ -6,6 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@picocss/pico": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
@@ -15,7 +16,10 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
+    "copy-pico": "node scripts/copy-pico.js",
+    "prestart": "npm run copy-pico",
     "start": "react-scripts start",
+    "prebuild": "npm run copy-pico",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

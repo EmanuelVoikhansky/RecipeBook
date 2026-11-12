@@ -1,6 +1,5 @@
 import * as React from "react";
 import "../App.css";
-import Icon from "./Icon";
 
 type Props = {
   isShown: boolean,
@@ -10,25 +9,7 @@ type Props = {
   height: string,
 };
 
-const MODAL_BACKGROUND_STYLE: React.CSSProperties = {
-  display: "flex",
-  position: "fixed",
-  zIndex: 1,
-  left: 0,
-  top: 0,
-  width: "100vw",
-  height: "100vh",
-  backgroundColor: "rgba(0,0,0,0.4)",
-};
-
-const MODAL_FOREGROUND_STYLE: React.CSSProperties = {
-  padding: "16px",
-  zIndex: 2,
-  borderRadius: "6px",
-  backgroundColor: "white",
-  overflow: "auto",
-};
-
+// Pico styles <dialog> as a themed overlay and <article> inside it as the card.
 function Modal({
   isShown,
   onClose,
@@ -40,26 +21,20 @@ function Modal({
     return null;
   }
   return (
-    <div
-      className="Centered Horizontal"
-      style={MODAL_BACKGROUND_STYLE}
-      onClick={onClose}
+    <dialog
+      open
+      onClick={(event) => {
+        // clicks on the overlay close the modal, clicks inside the card don't
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
     >
-      <div
-        style={{ ...MODAL_FOREGROUND_STYLE, height, width }}
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div
-          style={{ width: "100%", justifyContent: "flex-end" }}
-          className="Horizontal"
-        >
-          <div style={{ cursor: "pointer" }} onClick={onClose}>
-            <Icon icon="faTimes" />
-          </div>
-        </div>
-        {children}
-      </div>
-    </div>
+      <article className="Modal" style={{ maxWidth: width, height }}>
+        <button className="close" aria-label="Close" onClick={onClose} />
+        <div className="ModalBody">{children}</div>
+      </article>
+    </dialog>
   );
 }
 
