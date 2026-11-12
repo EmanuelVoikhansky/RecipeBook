@@ -1,19 +1,17 @@
-// @flow
-
 import * as React from "react";
 import { useState } from "react";
-import Modal from "./Modal.js";
-import TextInput from "./TextInput.js";
+import Modal from "./Modal";
+import TextInput from "./TextInput";
 import "../App.css";
-import type { Account } from "../state/useCookbookReducer.js";
-import { HARDCODED_DEV_ACCOUNT } from "../constants/devData.js";
+import type { Account } from "../state/useCookbookReducer";
+import { HARDCODED_DEV_ACCOUNT } from "../constants/devData";
 
 type Props = {
-  onLoginSuccess: (Account) => void,
-  onLoginFailure: (string) => void,
+  onLoginSuccess: (account: Account) => void,
+  onLoginFailure: (reason: string) => void,
 };
 
-function LoginForm({ onLoginSuccess, onLoginFailure }: Props): React.Node {
+function LoginForm({ onLoginSuccess, onLoginFailure }: Props): JSX.Element {
   const [show, setShown] = useState(false);
   const [userName, setUserName] = useState("");
   const [pwd, setPwd] = useState("");

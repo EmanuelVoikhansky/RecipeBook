@@ -1,18 +1,16 @@
-// @flow
-
 import * as React from "react";
-import Icon from "./Icon.js";
-import Image from "./Image.js";
-import StarRatingWidget from "./StarRatingWidget.js";
+import Icon from "./Icon";
+import Image from "./Image";
+import StarRatingWidget from "./StarRatingWidget";
 import "../App.css";
-import type { RecipeType } from "../state/useCookbookReducer.js";
+import type { RecipeType } from "../state/useCookbookReducer";
 
 type Props = {
   recipe: RecipeType,
   onClick: () => void,
 };
 
-function Recipe({ recipe, onClick }: Props): React.Node {
+function Recipe({ recipe, onClick }: Props): JSX.Element {
   const { imageUrl } = recipe;
   return (
     <div

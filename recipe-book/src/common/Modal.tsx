@@ -1,18 +1,16 @@
-// @flow
-
 import * as React from "react";
 import "../App.css";
-import Icon from "./Icon.js";
+import Icon from "./Icon";
 
 type Props = {
   isShown: boolean,
   onClose: () => void,
-  children: React.Node,
+  children: React.ReactNode,
   width: string,
   height: string,
 };
 
-const MODAL_BACKGROUND_STYLE = {
+const MODAL_BACKGROUND_STYLE: React.CSSProperties = {
   display: "flex",
   position: "fixed",
   zIndex: 1,
@@ -20,11 +18,10 @@ const MODAL_BACKGROUND_STYLE = {
   top: 0,
   width: "100vw",
   height: "100vh",
-  overflow: "none",
   backgroundColor: "rgba(0,0,0,0.4)",
 };
 
-const MODAL_FOREGROUND_STYLE = {
+const MODAL_FOREGROUND_STYLE: React.CSSProperties = {
   padding: "16px",
   zIndex: 2,
   borderRadius: "6px",
@@ -38,7 +35,7 @@ function Modal({
   children,
   height,
   width,
-}: Props): React.Node {
+}: Props): JSX.Element | null {
   if (!isShown) {
     return null;
   }

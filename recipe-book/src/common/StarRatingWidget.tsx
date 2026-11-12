@@ -1,16 +1,14 @@
-// @flow
-
 import * as React from "react";
-import Icon from "./Icon.js";
+import Icon from "./Icon";
 import "../App.css";
 
 type Props = {
   stars: number,
-  setStars?: (number) => void,
+  setStars?: (stars: number) => void,
 };
 
-function StarRatingWidget({ stars, setStars }: Props): React.Node {
-  const rating = [];
+function StarRatingWidget({ stars, setStars }: Props): JSX.Element {
+  const rating: JSX.Element[] = [];
   for (let star = 1; star <= 5; star++) {
     const color = stars >= star ? "gold" : "grey";
     rating.push(

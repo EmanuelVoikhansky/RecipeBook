@@ -1,22 +1,20 @@
-// @flow
-
 import * as React from "react";
 import { useState } from "react";
-import Icon from "./Icon.js";
-import TextInput from "./TextInput.js";
-import EditableImage from "./EditableImage.js";
+import Icon from "./Icon";
+import TextInput from "./TextInput";
+import EditableImage from "./EditableImage";
 import "../App.css";
-import StarRatingWidget from "./StarRatingWidget.js";
-import type { RecipeType } from "../state/useCookbookReducer.js";
-import type { Action } from "../state/useCookbookReducer.js";
+import StarRatingWidget from "./StarRatingWidget";
+import type { RecipeType } from "../state/useCookbookReducer";
+import type { Action } from "../state/useCookbookReducer";
 
 type Props = {
   recipe: RecipeType,
-  dispatch: (Action) => void,
+  dispatch: (action: Action) => void,
   editable: boolean,
 };
 
-function RecipeForm(props: Props): React.Node {
+function RecipeForm(props: Props): JSX.Element {
   // don't update global state until user clicks save
   const [recipe, setRecipe] = useState(props.recipe);
   const save = () =>
@@ -57,7 +55,7 @@ function RecipeForm(props: Props): React.Node {
         <div style={{ marginLeft: "16px" }}>
           <EditableImage
             fallback={
-              <Icon className="Border Centered" icon="faHamburger" size="10x" />
+              <Icon icon="faHamburger" size="10x" />
             }
             src={recipe.imageUrl}
             onChange={

@@ -1,17 +1,15 @@
-// @flow
-
 import * as React from "react";
 import { useState } from "react";
-import Icon from "./Icon.js";
-import Image from "./Image.js";
+import Icon from "./Icon";
+import Image from "./Image";
 import "../App.css";
 
 type Props = {
-  fallback: React.Node,
-  src: ?string,
-  onChange?: (string) => void,
+  fallback: React.ReactElement,
+  src: string | null | undefined,
+  onChange?: (url: string) => void,
   size: string,
-  styleOverride?: Object,
+  styleOverride?: React.CSSProperties,
 };
 
 function EditableImage({
@@ -20,7 +18,7 @@ function EditableImage({
   onChange,
   size,
   styleOverride,
-}: Props): React.Node {
+}: Props): JSX.Element {
   const [mouseIn, setMouseIn] = useState(false);
   const image =
     src != null ? (
@@ -51,7 +49,7 @@ function EditableImage({
       >
         {mouseIn ? (
           <label
-            for="imageUpload"
+            htmlFor="imageUpload"
             style={{
               position: "absolute",
               cursor: "pointer",
@@ -71,9 +69,12 @@ function EditableImage({
             opacity: 0, // this component is invisible
             zIndex: -1,
           }}
-          onChange={(event) =>
-            onChange(URL.createObjectURL(event.target.files[0]))
-          }
+          onChange={(event) => {
+            const file = event.target.files?.[0];
+            if (file != null) {
+              onChange(URL.createObjectURL(file));
+            }
+          }}
         />
         {image}
       </div>
