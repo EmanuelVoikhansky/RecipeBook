@@ -1,0 +1,74 @@
+""""""
+type Author {
+  """Auto generated on creation, do not set"""
+  id: Long
+  name: String
+
+  """URL of the authors profile pic"""
+  profilePicUrl: String
+}
+
+""""""
+type Login {
+  account: Author
+
+  """Pass this back with all subsequent requests"""
+  token: String
+}
+
+"""Long type"""
+scalar Long
+
+"""Mutation root"""
+type Mutation {
+  deleteRecipe(id: Long): Boolean!
+
+  """attempts login with given credentials"""
+  login(email: String, password: String): Login
+
+  """
+  save/update a recipe. Leave id blank for new recipe, specify it for an update
+  """
+  saveRecipe(id: Long, recipe: RecipeDraftInput): Recipe
+}
+
+"""Query root"""
+type Query {
+  all_recipes: [Recipe]
+
+  """get a recipe by ID"""
+  recipe(id: Long): Recipe
+}
+
+""""""
+type Recipe {
+  """Who wrote this recipe"""
+  author: Author
+  id: Long
+
+  """Cover image for this recipe"""
+  imageUrl: String
+
+  """How to cook this recipe"""
+  instructions: String
+  name: String
+
+  """Overall average rating out of 5 stars"""
+  stars: Float!
+}
+
+""""""
+input RecipeDraftInput {
+  """Cover image for this recipe"""
+  imageUrl: String
+
+  """How to cook this recipe"""
+  instructions: String
+  name: String
+
+  """Overall average rating out of 5 stars"""
+  stars: Float!
+}
+
+"""Use SPQR's SchemaPrinter to remove this from SDL"""
+scalar UNREPRESENTABLE
